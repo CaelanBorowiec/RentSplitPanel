@@ -42,14 +42,14 @@ else
 	}
 	else
 	{
-		echo '<pre>';
+		//echo '<pre>';
 		while($payment = $paid->fetch_assoc())
 		{
 			$totals[$payment["user"]][$payment["type"]] = $payment["sum(`amount`)"];
 			//totals[user][service] = amount;
 		}
-		print_r($totals);
-		echo '</pre>';
+		//print_r($totals);
+		//echo '</pre>';
 	}
 	while($row = $result->fetch_assoc())
 	{
@@ -60,14 +60,24 @@ else
 						<h2><strong>User:</strong> <?php echo (!empty($row["displayName"]) ? $row["displayName"] : '#'.$row["id"]); ?></h2>
 
 						<div class="section details">
+							<strong>Totals</strong>
 							<p><strong>Rent:</strong> <?php echo (!empty($row["rentAmount"]) ? "$".number_format($row["rentAmount"], 2) : 'None'); ?></p>
 							<p><strong>Power:</strong> <?php echo (!empty($row["powerAmount"]) ? "$".number_format($row["powerAmount"], 2) : 'None'); ?></p>
 							<p><strong>Internet:</strong> <?php echo (!empty($row["internetAmount"]) ? "$".number_format($row["internetAmount"], 2) : 'None'); ?></p>
 						</div>
 
-						<div class="section payments">
-							<p><strong>Rent Paid:</strong> <?php echo (!empty($payment[$row["id"]]) ? "$".number_format($row["rentAmount"], 2) : 'None'); ?></p>
+						<div class="section payment rent">
+							<p><strong>Rent Paid:</strong> <?php echo (!empty($totals[$row["id"]]["rent"]) ? "$".number_format($totals[$row["id"]]["rent"], 2) : 'None'); ?></p>
 						</div>
+
+						<div class="section payment power">
+							<p><strong>Power Paid:</strong> <?php echo (!empty($totals[$row["id"]]["power"]) ? "$".number_format($totals[$row["id"]]["power"], 2) : 'None'); ?></p>
+						</div>
+
+						<div class="section payment internet">
+							<p><strong>Internet Paid:</strong> <?php echo (!empty($totals[$row["id"]]["internet"]) ? "$".number_format($totals[$row["id"]]["internet"], 2) : 'None'); ?></p>
+						</div>
+
 
 						<p class="ui-li-aside"><strong>ID: <?php echo $row["id"]; ?></strong></p>
 					</a>

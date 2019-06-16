@@ -96,7 +96,23 @@ div.section {
     display: inline-block;
     border: 1px solid;
     min-width: 100px;
+		min-height: 100px;
     vertical-align: top;
+}
+
+.payment	{
+	background-size: 2vw;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.payment.rent {
+    background-image: url(../images/house.png);
+}
+.payment.power {
+    background-image: url(../images/power.png);
+}
+.payment.internet {
+    background-image: url(../images/internet.png);
 }
 
 #url {
