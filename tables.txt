@@ -1,0 +1,13 @@
+User values
+  - userid
+  - displayname
+  - power value
+  - rent value
+  - internet value
+  - disabled
+
+Payments
+  - userid
+  - type: power/rent/internet
+  - amount
+  - date
