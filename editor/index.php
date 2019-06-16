@@ -39,7 +39,12 @@ else
 				<li>
 					<a href="edit.php?id=<?php echo $row["id"]; ?>" data-ajax="false">
 
-						<h2><strong>User:</strong> <?php echo (!empty($row["displayName"]) ? $row["displayName"] : $row["id"]); ?></h2>
+						<h2><strong>User:</strong> <?php echo (!empty($row["displayName"]) ? $row["displayName"] : '#'.$row["id"]); ?></h2>
+
+						<p><strong>Rent:</strong> <?php echo (!empty($row["rentAmount"]) ? "$".number_format($row["rentAmount"], 2) : 'None'); ?></p>
+						<p><strong>Power:</strong> <?php echo (!empty($row["powerAmount"]) ? "$".number_format($row["powerAmount"], 2) : 'None'); ?></p>
+						<p><strong>Internet:</strong> <?php echo (!empty($row["internetAmount"]) ? "$".number_format($row["internetAmount"], 2) : 'None'); ?></p>
+
 						<p class="ui-li-aside"><strong>ID: <?php echo $row["id"]; ?></strong></p>
 					</a>
 				</li>
