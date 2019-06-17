@@ -62,20 +62,32 @@ else
 						<div class="section details">
 							<strong>Totals</strong>
 							<p><strong>Rent:</strong> <?php echo (!empty($row["rentAmount"]) ? "$".number_format($row["rentAmount"], 2) : 'None'); ?></p>
-							<p><strong>Power:</strong> <?php echo (!empty($row["powerAmount"]) ? "$".number_format($row["powerAmount"], 2) : 'None'); ?></p>
+							<p><strong>Power:</strong> <?php echo (!empty($row["powerAmount"]) ? "$".number_format($row["powerAmount"], 2) : 'TBD'); ?></p>
 							<p><strong>Internet:</strong> <?php echo (!empty($row["internetAmount"]) ? "$".number_format($row["internetAmount"], 2) : 'None'); ?></p>
 						</div>
 
+						<?php
+							$difference = (float)$row["rentAmount"] - (float)$totals[$row["id"]]["rent"];
+						?>
+
 						<div class="section payment rent">
-							<p><strong>Rent Paid:</strong> <?php echo (!empty($totals[$row["id"]]["rent"]) ? "$".number_format($totals[$row["id"]]["rent"], 2) : 'None'); ?></p>
+							<p><strong>Rent Due:</strong> <?php echo "$".number_format($difference, 2); ?></p>
 						</div>
+
+						<?php
+							$difference = (float)$row["powerAmount"] - (float)$totals[$row["id"]]["power"];
+						?>
 
 						<div class="section payment power">
-							<p><strong>Power Paid:</strong> <?php echo (!empty($totals[$row["id"]]["power"]) ? "$".number_format($totals[$row["id"]]["power"], 2) : 'None'); ?></p>
+							<p><strong>Power Due:</strong> <?php echo "$".number_format($difference, 2); ?></p>
 						</div>
 
-						<div class="section payment internet">
-							<p><strong>Internet Paid:</strong> <?php echo (!empty($totals[$row["id"]]["internet"]) ? "$".number_format($totals[$row["id"]]["internet"], 2) : 'None'); ?></p>
+						<?php
+							$difference = (float)$row["internetAmount"] - (float)$totals[$row["id"]]["internet"];
+						?>
+
+						<div class="section payment internet <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
+							<p><?php echo ($difference <= 0 ? 'Internet paid' : "<strong>Internet Due:</strong> $".number_format($difference, 2) ); ?></p>
 						</div>
 
 
