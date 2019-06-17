@@ -70,16 +70,16 @@ else
 							$difference = (float)$row["rentAmount"] - (float)$totals[$row["id"]]["rent"];
 						?>
 
-						<div class="section payment rent">
-							<p><strong>Rent Due:</strong> <?php echo "$".number_format($difference, 2); ?></p>
+						<div class="section payment rent <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
+							<p><?php echo ($difference <= 0 ? 'Rent paid' : "<strong>Rent Due:</strong> $".number_format($difference, 2) ); ?></p>
 						</div>
 
 						<?php
 							$difference = (float)$row["powerAmount"] - (float)$totals[$row["id"]]["power"];
 						?>
 
-						<div class="section payment power">
-							<p><strong>Power Due:</strong> <?php echo "$".number_format($difference, 2); ?></p>
+						<div class="section payment power <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
+							<p><?php echo ($difference <= 0 ? 'Power paid' : "<strong>Power Due:</strong> $".number_format($difference, 2) ); ?></p>
 						</div>
 
 						<?php
