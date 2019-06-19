@@ -30,6 +30,7 @@ $payments = "SELECT `user`, `type`, sum(`amount`)  FROM `payments` WHERE `date` 
 <?php
 
 $totals = array();
+$translator = new Translations();
 
 if(!$result = $db->query($sql)){
 	echo 'There was an error running the query [' . $db->error . ']';
@@ -67,30 +68,17 @@ else
 							<p><strong>Internet:</strong> <?php echo (!empty($row["internetAmount"]) ? "$".number_format($row["internetAmount"], 2) : 'None'); ?></p>
 						</div>
 
-						<?php
-							$difference = (float)$row["rentAmount"] - (float)$totals[$row["id"]]["rent"];
-						?>
-
 						<div class="section payment rent <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
-							<p><?php echo ($difference <= 0 ? 'Rent paid' : "<strong>Rent Due:</strong> $".number_format($difference, 2) ); ?></p>
+							<p><?php echo $translator->get_bill_status("Rent", $row["rentAmount"], $totals[$row["id"]]["rent"]); ?></p>
 						</div>
-
-						<?php
-							$difference = (float)$row["powerAmount"] - (float)$totals[$row["id"]]["power"];
-						?>
 
 						<div class="section payment power <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
-							<p><?php echo ($difference <= 0 ? 'Power paid' : "<strong>Power Due:</strong> $".number_format($difference, 2) ); ?></p>
+							<p><?php echo $translator->get_bill_status("Power", $row["powerAmount"], $totals[$row["id"]]["power"]); ?></p>
 						</div>
-
-						<?php
-							$difference = (float)$row["internetAmount"] - (float)$totals[$row["id"]]["internet"];
-						?>
 
 						<div class="section payment internet <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
-							<p><?php echo ($difference <= 0 ? 'Internet paid' : "<strong>Internet Due:</strong> $".number_format($difference, 2) ); ?></p>
+							<p><?php echo $translator->get_bill_status("Internet", $row["internetAmount"], $totals[$row["id"]]["internet"]); ?></p>
 						</div>
-
 
 						<p class="ui-li-aside"><strong>ID: <?php echo $row["id"]; ?></strong></p>
 					</a>

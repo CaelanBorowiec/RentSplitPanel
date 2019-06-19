@@ -4,9 +4,9 @@ if(!defined('IncludesAllowed'))
 
 header('Content-Type: text/html; charset=utf-8');
 
-$database=" ";
-$user=" ";
-$password=" ";
+$database="";
+$user="";
+$password="";
 $host="localhost";
 
 ini_set("date.timezone", "US/Central");
