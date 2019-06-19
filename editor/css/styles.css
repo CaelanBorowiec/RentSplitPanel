@@ -108,6 +108,7 @@ div.section {
 	background-size: 2vw;
 	background-repeat: no-repeat;
 	background-position: center;
+	text-align: center;
 }
 .payment.rent {
     background-image: url(../images/house.png);
