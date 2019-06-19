@@ -15,15 +15,17 @@ $payments = "SELECT `user`, `type`, sum(`amount`)  FROM `payments` WHERE `date` 
 	<title>
 		Payment Portal
 	</title>
+	<link href="css/jquery.mobile-1.4.4.css" rel="stylesheet" type="text/css">
 	<link href="css/styles.css" rel="stylesheet" type="text/css">
 	<script src="js/jquery-2.1.1.min.js" type="application/javascript"></script>
+	<script src="js/jquery.mobile-1.4.4.min.js" type="application/javascript"></script>
 </head>
 
 <body>
 	<div class="container">
 		<div class="content">
 			<ul data-inset="true" data-role="listview">
-				<li data-role="list-divider">Household Members</li>
+				<li data-role="list-divider">Users</li>
 <?php
 
 $totals = array();
@@ -56,7 +58,7 @@ else
 				<li>
 					<a href="edit.php?id=<?php echo $row["id"]; ?>" data-ajax="false">
 
-						<h2><?php echo (!empty($row["displayName"]) ? $row["displayName"] : '#'.$row["id"]); ?></h2>
+						<h2><strong>User:</strong> <?php echo (!empty($row["displayName"]) ? $row["displayName"] : '#'.$row["id"]); ?></h2>
 
 						<div class="section details">
 							<strong>Totals</strong>
