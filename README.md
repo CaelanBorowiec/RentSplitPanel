@@ -9,10 +9,13 @@ A lightweight dashboard to display household members, as well as their monthly c
 
 ### Planned Features:
 - [ ] More translations for payment statuses (due, paid, none required).
+- [ ] CSS file cleanup.
+- [ ] Automatic page updates (scheduled refreshes).
 - [ ] Admin panel to edit user payments and payment history.
 - [ ] Admin panel to add/remove new payment types.
 - [ ] Command integration with SMS, Telegram, etc.
-- [ ] Integration with payment services (PayPal)
+- [ ] Integration with payment services (PayPal).
+- [ ] Automatic page updates after payments or other updates.
 - [ ] Stats graph of payment dates or other metrics.
 - [ ] Achievements.
 
@@ -21,7 +24,7 @@ A lightweight dashboard to display household members, as well as their monthly c
 * Coming soon
 
 ## Commands
-* Coming soon
+* todo
 
 ## About
 
