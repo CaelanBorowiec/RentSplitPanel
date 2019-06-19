@@ -1,6 +1,7 @@
 <?php
 define('IncludesAllowed', TRUE);
-require_once("inc/db.php");
+require_once("inc/db.inc.php");
+require_once("inc/translations.inc.php");
 
 $sql = "SELECT * FROM `users` WHERE `disabled` = 0;";
 $payments = "SELECT `user`, `type`, sum(`amount`)  FROM `payments` WHERE `date` BETWEEN '" . date('Y-m-01') . "' AND '" . date('Y-m-t') . "' GROUP BY `user`, `type`"
