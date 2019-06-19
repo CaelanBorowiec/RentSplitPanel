@@ -67,15 +67,15 @@ else
 							<p><strong>Internet:</strong> <?php echo (!empty($row["internetAmount"]) ? "$".number_format($row["internetAmount"], 2) : 'None'); ?></p>
 						</div>
 
-						<div class="section payment rent <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
+						<div class="section payment rent <?php echo (((float)$row["rentAmount"] - (float)$totals[$row["id"]]["rent"]) <= 0 ? 'paid' : ''); ?>">
 							<p><?php echo $translator->get_bill_status("Rent", $row["rentAmount"], $totals[$row["id"]]["rent"]); ?></p>
 						</div>
 
-						<div class="section payment power <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
+						<div class="section payment power <?php echo (((float)$row["powerAmount"] - (float)$totals[$row["id"]]["power"]) <= 0 ? 'paid' : ''); ?>">
 							<p><?php echo $translator->get_bill_status("Power", $row["powerAmount"], $totals[$row["id"]]["power"]); ?></p>
 						</div>
 
-						<div class="section payment internet <?php echo ($difference <= 0 ? 'paid' : ''); ?>">
+						<div class="section payment internet <?php echo (((float)$row["internetAmount"] - (float)$totals[$row["id"]]["internet"]) <= 0 ? 'paid' : ''); ?>">
 							<p><?php echo $translator->get_bill_status("Internet", $row["internetAmount"], $totals[$row["id"]]["internet"]); ?></p>
 						</div>
 
