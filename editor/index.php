@@ -11,6 +11,7 @@ $payments = "SELECT `user`, `type`, sum(`amount`)  FROM `payments` WHERE `date` 
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta http-equiv="refresh" content="3600">
 
 	<title>
 		Payment Portal
