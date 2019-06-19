@@ -8,7 +8,7 @@ A lightweight dashboard to display household members, as well as their monthly c
 * Enumerate users and payment statuses on a visually appealing dashboard.
 
 ### Planned Features:
-- [ ] More translations for payment statuses (due, paid, none required).
+- [*] Better translations for payment statuses (due, paid, none required).
 - [ ] CSS file cleanup.
 - [ ] Automatic page updates (scheduled refreshes).
 - [ ] Admin panel to edit user payments and payment history.

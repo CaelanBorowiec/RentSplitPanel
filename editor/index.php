@@ -15,7 +15,6 @@ $payments = "SELECT `user`, `type`, sum(`amount`)  FROM `payments` WHERE `date` 
 	<title>
 		Payment Portal
 	</title>
-	<link href="css/pure-min.css" rel="stylesheet" type="text/css">
 	<link href="css/jquery.mobile-1.4.4.css" rel="stylesheet" type="text/css">
 	<link href="css/styles.css" rel="stylesheet" type="text/css">
 	<script src="js/jquery-2.1.1.min.js" type="application/javascript"></script>
