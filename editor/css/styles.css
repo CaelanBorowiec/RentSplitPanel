@@ -110,6 +110,11 @@ div.section {
 	background-color: rgba(0, 255, 0, .2);
 }
 
+.payment-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
 .payment	{
 	background-size: 2vw;
 	background-repeat: no-repeat;

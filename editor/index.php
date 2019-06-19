@@ -14,7 +14,7 @@ $payments = "SELECT `user`, `type`, sum(`amount`)  FROM `payments` WHERE `date` 
 	<meta http-equiv="refresh" content="3600">
 
 	<title>
-		Payment Portal
+		Household Overview
 	</title>
 	<link href="css/jquery.mobile-1.4.4.css" rel="stylesheet" type="text/css">
 	<link href="css/styles.css" rel="stylesheet" type="text/css">
@@ -26,7 +26,7 @@ $payments = "SELECT `user`, `type`, sum(`amount`)  FROM `payments` WHERE `date` 
 	<div class="container">
 		<div class="content">
 			<ul data-inset="true" data-role="listview">
-				<li data-role="list-divider">Users</li>
+				<li data-role="list-divider">Household Overview</li>
 <?php
 
 $totals = array();
@@ -59,26 +59,28 @@ else
 				<li>
 					<a href="edit.php?id=<?php echo $row["id"]; ?>" data-ajax="false">
 
-						<h2><strong>User:</strong> <?php echo (!empty($row["displayName"]) ? $row["displayName"] : '#'.$row["id"]); ?></h2>
+						<h2><strong></strong> <?php echo (!empty($row["displayName"]) ? $row["displayName"] : '#'.$row["id"]); ?></h2>
 
-						<div class="section details">
-							<strong>Totals</strong>
-							<p><strong>Rent:</strong> <?php echo (!empty($row["rentAmount"]) ? "$".number_format($row["rentAmount"], 2) : 'None'); ?></p>
-							<p><strong>Power:</strong> <?php echo (!empty($row["powerAmount"]) ? "$".number_format($row["powerAmount"], 2) : 'TBD'); ?></p>
-							<p><strong>Internet:</strong> <?php echo (!empty($row["internetAmount"]) ? "$".number_format($row["internetAmount"], 2) : 'None'); ?></p>
-						</div>
+						<div class="payment-grid">
+							<div class="section details">
+								<strong>Totals</strong>
+								<p><strong>Rent:</strong> <?php echo (!empty($row["rentAmount"]) ? "$".number_format($row["rentAmount"], 2) : 'None'); ?></p>
+								<p><strong>Power:</strong> <?php echo (!empty($row["powerAmount"]) ? "$".number_format($row["powerAmount"], 2) : 'TBD'); ?></p>
+								<p><strong>Internet:</strong> <?php echo (!empty($row["internetAmount"]) ? "$".number_format($row["internetAmount"], 2) : 'None'); ?></p>
+							</div>
 
-						<div class="section payment rent <?php echo (((float)$row["rentAmount"] - (float)$totals[$row["id"]]["rent"]) <= 0 ? 'paid' : ''); ?>">
-							<p><?php echo $translator->get_bill_status("Rent", $row["rentAmount"], $totals[$row["id"]]["rent"]); ?></p>
-						</div>
+							<div class="section payment rent <?php echo (((float)$row["rentAmount"] - (float)$totals[$row["id"]]["rent"]) <= 0 ? 'paid' : ''); ?>">
+								<p><?php echo $translator->get_bill_status("Rent", $row["rentAmount"], $totals[$row["id"]]["rent"]); ?></p>
+							</div>
 
-						<div class="section payment power <?php echo (((float)$row["powerAmount"] - (float)$totals[$row["id"]]["power"]) <= 0 ? 'paid' : ''); ?>">
-							<p><?php echo $translator->get_bill_status("Power", $row["powerAmount"], $totals[$row["id"]]["power"]); ?></p>
-						</div>
+							<div class="section payment power <?php echo (((float)$row["powerAmount"] - (float)$totals[$row["id"]]["power"]) <= 0 ? 'paid' : ''); ?>">
+								<p><?php echo $translator->get_bill_status("Power", $row["powerAmount"], $totals[$row["id"]]["power"]); ?></p>
+							</div>
 
-						<div class="section payment internet <?php echo (((float)$row["internetAmount"] - (float)$totals[$row["id"]]["internet"]) <= 0 ? 'paid' : ''); ?>">
-							<p><?php echo $translator->get_bill_status("Internet", $row["internetAmount"], $totals[$row["id"]]["internet"]); ?></p>
-						</div>
+							<div class="section payment internet <?php echo (((float)$row["internetAmount"] - (float)$totals[$row["id"]]["internet"]) <= 0 ? 'paid' : ''); ?>">
+								<p><?php echo $translator->get_bill_status("Internet", $row["internetAmount"], $totals[$row["id"]]["internet"]); ?></p>
+							</div>
+					</div>
 
 						<p class="ui-li-aside"><strong>ID: <?php echo $row["id"]; ?></strong></p>
 					</a>
