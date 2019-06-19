@@ -8,17 +8,20 @@ A lightweight dashboard to display household members, as well as their monthly c
 * Enumerate users and payment statuses on a visually appealing dashboard.
 
 ### Planned Features:
-* Admin panel to edit user payments and payment history.
-* Admin panel to add/remove new payment types.
-* Command integration with SMS, Telegram, etc.
-* Integration with payment services (PayPal)
+- [ ] More translations for payment statuses (due, paid, none required).
+- [ ] Admin panel to edit user payments and payment history.
+- [ ] Admin panel to add/remove new payment types.
+- [ ] Command integration with SMS, Telegram, etc.
+- [ ] Integration with payment services (PayPal)
+- [ ] Stats graph of payment dates or other metrics.
+- [ ] Achievements.
 
 ## Setup
 
 * Coming soon
 
 ## Commands
-* todo
+* Coming soon
 
 ## About
 
