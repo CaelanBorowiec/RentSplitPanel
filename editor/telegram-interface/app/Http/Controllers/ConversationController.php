@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
+use App\Services\DBService;
 use App\Http\Controllers\Controller;
 use App\Conversations\DefaultConversation;
 
@@ -16,7 +17,7 @@ class ConversationController extends Controller
     public function index($bot)
     {
         // We use the startConversation method provided by botman to start a new conversation and pass
-        // our conversation class as a param to it. 
+        // our conversation class as a param to it.
         $bot->startConversation(new DefaultConversation);
     }
 }

@@ -30,7 +30,7 @@ class DefaultConversation extends Conversation
                 // We compare the answer to our pre-defined ones and respond accordingly.
                 switch ($answer->getValue()) {
                     case 'listusers':
-                        $this->askForBreedName();
+                        $this->say((new App\Services\DBService)->getUsers());
                         break;
                     case 'userdetails':
                         $this->askForSubBreed();
@@ -45,13 +45,9 @@ class DefaultConversation extends Conversation
      *
      * @return void
      */
-    public function askForBreedName()
+    public function printUserList()
     {
-        $this->ask('What\'s the breed name?', function (Answer $answer) {
-            $name = $answer->getText();
-
-            $this->say((new App\Services\DogService)->byBreed($name));
-        });
+        $this->say((App\Services\DBService)->getUsers());
     }
 
     /**
@@ -64,7 +60,7 @@ class DefaultConversation extends Conversation
         $this->ask('What\'s the breed and sub-breed names? ex:hound:afghan', function (Answer $answer) {
             $answer = explode(':', $answer->getText());
 
-            $this->say((new App\Services\DogService)->bySubBreed($answer[0], $answer[1]));
+            $this->say((new App\Services\DBService)->bySubBreed($answer[0], $answer[1]));
         });
     }
 

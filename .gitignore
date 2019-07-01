@@ -2,3 +2,4 @@
 editor/inc/db.php
 login
 .remote-sync.json
+editor/telegram-interface/config/database.php
