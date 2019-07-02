@@ -23,12 +23,12 @@ class DBService
           //Log::debug( $results );
           return $response;
      }
-     public function getUserArray()
+     public function getUserMenuArray($cmd="")
      {
           $results = DB::table('users')->get();
           $users = [];
           foreach ($results as $user) {
-               array_push($users, Button::create("#$user->id: [$user->displayName]")->value($user->id));
+               array_push($users, Button::create("#$user->id: [$user->displayName]")->value($cmd . $user->id));
           }
           return $users;
      }
