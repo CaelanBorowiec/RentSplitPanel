@@ -18,7 +18,7 @@ class DBService
           $results = DB::table('users')->get();
           $response = "Users:" . "\n";
           foreach ($results as $user) {
-               $response .= "(#$user->id) " . ($user->displayName != "" ? $user->displayName : "Unnamed") . "\n";
+               $response .= " $user->id. " . ($user->displayName != "" ? $user->displayName : "Unnamed") . "\n";
           }
           //Log::debug( $results );
           return $response;
@@ -28,8 +28,33 @@ class DBService
           $results = DB::table('users')->get();
           $users = [];
           foreach ($results as $user) {
-               array_push($users, Button::create("#$user->id: [$user->displayName]")->value($cmd . $user->id));
+               array_push($users, Button::create("$user->id. [$user->displayName]")->value($cmd . $user->id));
           }
           return $users;
+     }
+
+     public function printUserDetails($id)
+     {
+        $results = DB::select('select payments.type, payments.amount, users.displayName from payments INNER JOIN users ON payments.user = users.id where payments.user = :id', ['id' => $id]);
+
+        $paymentsTypes = [];
+        $paymentsMade = [];
+        // Count the amounts paid
+        foreach ($results as $payment) {
+             if (!isset($paymentsMade[$payment->type]))
+             {
+                  $paymentsMade[$payment->type] = 0;
+                  array_push($paymentsTypes, $payment->type);
+             }
+             $paymentsMade[$payment->type] += $payment->amount;
+        }
+
+        // Build the message
+        $message = $results[0]->displayName . " has paid:\n";
+        foreach ($paymentsTypes as $type) {
+             $message .= " - $" . $paymentsMade[$type] . " for " . $type . "\n";
+        }
+
+        return $message;
      }
 }

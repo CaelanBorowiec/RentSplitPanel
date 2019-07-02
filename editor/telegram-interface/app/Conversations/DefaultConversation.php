@@ -23,7 +23,7 @@ class DefaultConversation extends Conversation
         $question = Question::create('Hi, how can I help?')
             ->addButtons([
                 Button::create('List users')->value('listusers'),
-                Button::create('Check a user\'s payment status')->value('paymentstatus'),
+                Button::create('List a user\'s payments')->value('paymentstatus'),
             ]);
 
         // We ask our user the question.
@@ -48,11 +48,11 @@ class DefaultConversation extends Conversation
 
     public function userMenu()
     {
-        $question = Question::create('Which user?')->addButtons((new \App\Services\DBService)->getUserMenuArray(""));
+        $question = Question::create('Which user?')->addButtons((new DBService)->getUserMenuArray(""));
 
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
-                $this->say("You said: " . $answer->getValue());
+                $this->say((new App\Services\DBService)->printUserDetails((int) $answer->getValue()));
             }
         });
     }
