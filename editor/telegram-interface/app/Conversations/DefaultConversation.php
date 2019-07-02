@@ -13,6 +13,15 @@ use App\Services\DBService;
 class DefaultConversation extends Conversation
 {
     /**
+     * Constructor
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->DBService = new DBService;
+    }
+    /**
      * First question to start the conversation.
      *
      * @return void
@@ -24,6 +33,7 @@ class DefaultConversation extends Conversation
             ->addButtons([
                 Button::create('List users')->value('listusers'),
                 Button::create('List a user\'s payments')->value('paymentstatus'),
+                Button::create('Log a payment')->value('newpayment'),
             ]);
 
         // We ask our user the question.
@@ -33,13 +43,13 @@ class DefaultConversation extends Conversation
                 // We compare the answer to our pre-defined ones and respond accordingly.
                 switch ($answer->getValue()) {
                     case 'listusers':
-                        $this->say((new App\Services\DBService)->printUsers());
+                        $this->say($this->DBService->printUsers());
                         break;
                     case 'paymentstatus':
                         $this->userMenu();
                         break;
-                    case 'nothing':
-                        $this->nothing();
+                    case 'newpayment':
+                        $this->newPayment();
                         break;
                 }
             }
@@ -48,18 +58,23 @@ class DefaultConversation extends Conversation
 
     public function userMenu()
     {
-        $question = Question::create('Which user?')->addButtons((new DBService)->getUserMenuArray(""));
+        $question = Question::create('Which user?')->addButtons($this->DBService->getUserMenuArray(""));
 
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
-                $this->say((new App\Services\DBService)->printUserDetails((int) $answer->getValue()));
+                $this->say($this->DBService->printUserDetails((int) $answer->getValue()));
             }
         });
     }
 
-    public function nothing()
+    public function newPayment()
     {
-        $this->say("Aaaa, I have no idea what to do here yet!");
+        $question = Question::create('Okay, a new payment. Which user?')->addButtons($this->DBService->getUserMenuArray(""));
+        return $this->ask($question, function (Answer $answer) {
+            if ($answer->isInteractiveMessageReply()) {
+                $this->say("You picked ". $answer->getValue());
+            }
+        });
     }
 
     /**
