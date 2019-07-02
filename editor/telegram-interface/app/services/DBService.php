@@ -37,6 +37,9 @@ class DBService
      {
         $results = DB::select('select payments.type, payments.amount, users.displayName from payments INNER JOIN users ON payments.user = users.id where payments.user = :id', ['id' => $id]);
 
+        if (sizeof($results) == 0)
+          return "This user has not made any payments";
+
         $paymentsTypes = [];
         $paymentsMade = [];
         // Count the amounts paid
