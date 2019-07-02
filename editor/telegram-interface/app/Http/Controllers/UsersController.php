@@ -17,4 +17,11 @@ class UsersController extends Controller
     {
         $bot->reply($this->dbs->getUsers());
     }
+
+    public function replyUID($bot)
+    {
+        $user = $bot->getUser();
+
+        $bot->reply("Hi " . $user->getFirstName() . ", your UID is: " . $user->getId());
+    }
 }
