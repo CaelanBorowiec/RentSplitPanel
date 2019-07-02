@@ -23,6 +23,7 @@ class DBService
           //Log::debug( $results );
           return $response;
      }
+
      public function getUserMenuArray($cmd="")
      {
           $results = DB::table('users')->get();
@@ -63,8 +64,18 @@ class DBService
 
      public function setDisplayName($id, $name)
      {
-        DB::table('users')
-            ->where('id', $id)
-            ->update(['displayName' => $name]);
+          DB::table('users')
+               ->where('id', $id)
+               ->update(['displayName' => $name]);
+     }
+
+     public function logPayment($id, $type, $amount)
+     {
+          DB::table('payments')->insert([
+               'user' => $id,
+               'type' => $type,
+               'amount' => $amount,
+               'date' => date("Y-m-d H:i:s")
+          ]);
      }
 }

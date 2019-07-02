@@ -34,6 +34,7 @@ class DefaultConversation extends Conversation
                 Button::create('List users')->value('listusers'),
                 Button::create('List a user\'s payments')->value('paymentstatus'),
                 Button::create('Set a display name')->value('displayname'),
+                Button::create('Add a payment')->value('newpayment'),
             ]);
 
         // We ask our user the question.
@@ -50,6 +51,9 @@ class DefaultConversation extends Conversation
                         break;
                     case 'displayname':
                         $this->updateDisplayName();
+                        break;
+                    case 'newpayment':
+                        $this->addNewPayment();
                         break;
                 }
             }
@@ -82,6 +86,38 @@ class DefaultConversation extends Conversation
             }
         });
     }
+
+    public function addNewPayment()
+    {
+        $question = Question::create('Okay, a payment. Which user?')->addButtons($this->DBService->getUserMenuArray(""));
+        $this->ask($question, function (Answer $answer) {
+            if ($answer->isInteractiveMessageReply()) {
+                //$this->say("You picked ". $answer->getValue());
+                $this->target = (int) $answer->getValue();
+
+                $question = Question::create("Okay, what is the payment for?")->addButtons($this->getPaymentTypes());
+                $this->ask($question, function (Answer $answer) {
+                    $this->paymentType = $answer->getValue();
+
+                    $this->ask("Okay, how much was paid?", function (Answer $response) {
+                        $this->DBService->logPayment( $this->target, $this->paymentType, $response->getText());
+                        $this->say('Cool, I logged the payment');
+                        //$this->say($this->DBService->printUsers());
+                    });
+                });
+            }
+        });
+    }
+    function getPaymentTypes()
+    {
+        $types = [ "internet", "rent", "power" ];
+        $buttons = [];
+        foreach ($types as $type) {
+            array_push($buttons, Button::create(ucfirst($type))->value($type));
+        }
+        return $buttons;
+    }
+
 
     /**
      * Start the conversation
