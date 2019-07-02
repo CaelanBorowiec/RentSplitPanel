@@ -7,6 +7,9 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 
+use App\Services\DBService;
+
+
 class DefaultConversation extends Conversation
 {
     /**
@@ -20,7 +23,7 @@ class DefaultConversation extends Conversation
         $question = Question::create('Hi, how can I help?')
             ->addButtons([
                 Button::create('List users')->value('listusers'),
-                Button::create('Check a user\'s payment status')->value('userdetails'),
+                Button::create('Check a user\'s payment status')->value('paymentstatus'),
             ]);
 
         // We ask our user the question.
@@ -32,18 +35,8 @@ class DefaultConversation extends Conversation
                     case 'listusers':
                         $this->say((new App\Services\DBService)->printUsers());
                         break;
-                    case 'userdetails':
-                        $question = Question::create('Which user?')->addButtons((new App\Services\DBService)->getUserArray());
-
-                        return $this->ask($question, function (Answer $answer) {
-                            if ($answer->isInteractiveMessageReply()) {
-                            switch ($answer->getValue()) {
-                                case '#5" []':
-                                    $this->say("You said 5!");
-                                    break;
-                            }
-                            }
-                        });
+                    case 'paymentstatus':
+                        $this->userMenu();
                         break;
                     case 'nothing':
                         $this->nothing();
@@ -53,21 +46,17 @@ class DefaultConversation extends Conversation
         });
     }
 
-    /**
-     * Ask for the breed name and send the image.
-     *
-     * @return void
-     */
-    public function printUserList()
+    public function userMenu()
     {
-        $this->say((App\Services\DBService)->getUsers());
+        $question = Question::create('Which user?')->addButtons((new \App\Services\DBService)->getUserMenuArray(""));
+
+        return $this->ask($question, function (Answer $answer) {
+            if ($answer->isInteractiveMessageReply()) {
+                $this->say("You said: " . $answer->getValue());
+            }
+        });
     }
 
-    /**
-     * Ask for the breed name and send the image.
-     *
-     * @return void
-     */
     public function nothing()
     {
         $this->say("Aaaa, I have no idea what to do here yet!");
