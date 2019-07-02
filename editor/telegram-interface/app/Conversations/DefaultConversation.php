@@ -30,10 +30,23 @@ class DefaultConversation extends Conversation
                 // We compare the answer to our pre-defined ones and respond accordingly.
                 switch ($answer->getValue()) {
                     case 'listusers':
-                        $this->say((new App\Services\DBService)->getUsers());
+                        $this->say((new App\Services\DBService)->printUsers());
                         break;
                     case 'userdetails':
-                        $this->askForSubBreed();
+                        $question = Question::create('Which user?')->addButtons((new App\Services\DBService)->getUserArray());
+
+                        return $this->ask($question, function (Answer $answer) {
+                            if ($answer->isInteractiveMessageReply()) {
+                            switch ($answer->getValue()) {
+                                case '#5" []':
+                                    $this->say("You said 5!");
+                                    break;
+                            }
+                            }
+                        });
+                        break;
+                    case 'nothing':
+                        $this->nothing();
                         break;
                 }
             }
@@ -55,13 +68,9 @@ class DefaultConversation extends Conversation
      *
      * @return void
      */
-    public function askForSubBreed()
+    public function nothing()
     {
-        $this->ask('What\'s the breed and sub-breed names? ex:hound:afghan', function (Answer $answer) {
-            $answer = explode(':', $answer->getText());
-
-            $this->say((new App\Services\DBService)->bySubBreed($answer[0], $answer[1]));
-        });
+        $this->say("Aaaa, I have no idea what to do here yet!");
     }
 
     /**

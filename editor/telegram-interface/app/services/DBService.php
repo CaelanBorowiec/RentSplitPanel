@@ -6,9 +6,14 @@ use Log;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
+use BotMan\BotMan\Messages\Incoming\Answer;
+use BotMan\BotMan\Messages\Outgoing\Question;
+use BotMan\BotMan\Messages\Outgoing\Actions\Button;
+use BotMan\BotMan\Messages\Conversations\Conversation;
+
 class DBService
 {
-     public function getUsers()
+     public function printUsers()
      {
           $results = DB::table('users')->get();
           $response = "Users:" . "\n";
@@ -18,8 +23,13 @@ class DBService
           //Log::debug( $results );
           return $response;
      }
-     public function bySubBreed()
+     public function getUserArray()
      {
-          return "Can't help right now";
+          $results = DB::table('users')->get();
+          $users = [];
+          foreach ($results as $user) {
+               array_push($users, Button::create("#$user->id: [$user->displayName]")->value($user->id));
+          }
+          return $users;
      }
 }
