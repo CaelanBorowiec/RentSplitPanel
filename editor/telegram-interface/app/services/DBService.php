@@ -35,7 +35,7 @@ class DBService
 
      public function printUserDetails($id)
      {
-        $results = DB::select('select payments.type, payments.amount, users.displayName from payments INNER JOIN users ON payments.user = users.id where payments.user = :id', ['id' => $id]);
+        $results = DB::select('SELECT payments.type, payments.amount, users.displayName FROM payments INNER JOIN users ON payments.user = users.id where payments.user = :id', ['id' => $id]);
 
         if (sizeof($results) == 0)
           return "This user has not made any payments";
@@ -59,5 +59,12 @@ class DBService
         }
 
         return $message;
+     }
+
+     public function setDisplayName($id, $name)
+     {
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['displayName' => $name]);
      }
 }

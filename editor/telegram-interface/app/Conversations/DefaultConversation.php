@@ -33,7 +33,7 @@ class DefaultConversation extends Conversation
             ->addButtons([
                 Button::create('List users')->value('listusers'),
                 Button::create('List a user\'s payments')->value('paymentstatus'),
-                Button::create('Log a payment')->value('newpayment'),
+                Button::create('Set a display name')->value('displayname'),
             ]);
 
         // We ask our user the question.
@@ -48,8 +48,8 @@ class DefaultConversation extends Conversation
                     case 'paymentstatus':
                         $this->userMenu();
                         break;
-                    case 'newpayment':
-                        $this->newPayment();
+                    case 'displayname':
+                        $this->updateDisplayName();
                         break;
                 }
             }
@@ -67,12 +67,17 @@ class DefaultConversation extends Conversation
         });
     }
 
-    public function newPayment()
+    public function updateDisplayName()
     {
-        $question = Question::create('Okay, a new payment. Which user?')->addButtons($this->DBService->getUserMenuArray(""));
-        return $this->ask($question, function (Answer $answer) {
+        $question = Question::create('Okay, a new name. Which user?')->addButtons($this->DBService->getUserMenuArray(""));
+        $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
-                $this->say("You picked ". $answer->getValue());
+                //$this->say("You picked ". $answer->getValue());
+                $this->target = (int) $answer->getValue();
+                $this->ask("Okay, what's the new name?", function (Answer $response) {
+                    $this->DBService->setDisplayName( $this->target, $response->getText());
+                    $this->say('Cool - you said ' . $response->getText());
+                });
             }
         });
     }
