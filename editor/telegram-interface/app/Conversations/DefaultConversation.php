@@ -76,7 +76,8 @@ class DefaultConversation extends Conversation
                 $this->target = (int) $answer->getValue();
                 $this->ask("Okay, what's the new name?", function (Answer $response) {
                     $this->DBService->setDisplayName( $this->target, $response->getText());
-                    $this->say('Cool - you said ' . $response->getText());
+                    $this->say('Cool, I updated the name to ' . $response->getText());
+                    $this->say($this->DBService->printUsers());
                 });
             }
         });
