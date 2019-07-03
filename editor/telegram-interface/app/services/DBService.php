@@ -78,4 +78,9 @@ class DBService
                'date' => date("Y-m-d H:i:s")
           ]);
      }
+
+     public function resetPayments()
+     {
+       DB::table('payments')->truncate();
+     }
 }

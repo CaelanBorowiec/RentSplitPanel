@@ -35,6 +35,7 @@ class DefaultConversation extends Conversation
                 Button::create('List a user\'s payments')->value('paymentstatus'),
                 Button::create('Set a display name')->value('displayname'),
                 Button::create('Add a payment')->value('newpayment'),
+                Button::create('Clear all payments')->value('clearpayments'),
             ]);
 
         // We ask our user the question.
@@ -54,6 +55,10 @@ class DefaultConversation extends Conversation
                         break;
                     case 'newpayment':
                         $this->addNewPayment();
+                        break;
+                    case 'clearpayments':
+                        $this->DBService->resetPayments();
+                        $this->say("Okay, I cleared all stored payments");
                         break;
                 }
             }
