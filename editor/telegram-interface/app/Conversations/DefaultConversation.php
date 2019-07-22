@@ -36,6 +36,7 @@ class DefaultConversation extends Conversation
                 Button::create('Set a display name')->value('displayname'),
                 Button::create('Add a payment')->value('newpayment'),
                 Button::create('Clear all payments')->value('clearpayments'),
+                Button::create('Set power cost')->value('setpower'),
             ]);
 
         // We ask our user the question.
@@ -59,6 +60,10 @@ class DefaultConversation extends Conversation
                     case 'clearpayments':
                         $this->DBService->resetPayments();
                         $this->say("Okay, I cleared all stored payments");
+                        break;
+                        break;
+                    case 'setpower':
+                        $this->processPowerCost();
                         break;
                 }
             }
@@ -121,6 +126,16 @@ class DefaultConversation extends Conversation
             array_push($buttons, Button::create(ucfirst($type))->value($type));
         }
         return $buttons;
+    }
+
+    public function processPowerCost()
+    {
+        $this->ask("Okay, what's the power bill?", function (Answer $response) {
+            $amount = $response->getText();
+            $usersCount = $this->DBService->getUserCount();
+            $this->DBService->setPowerCost($amount/$usersCount);
+            $this->say('Cool, I did the needful, power cost is now ' . $amount/$usersCount  );
+        });
     }
 
 

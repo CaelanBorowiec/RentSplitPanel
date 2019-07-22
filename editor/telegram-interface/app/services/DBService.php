@@ -69,6 +69,13 @@ class DBService
                ->update(['displayName' => $name]);
      }
 
+     public function setPowerCost($value)
+     {
+          DB::table('users')
+               ->where('disabled', 0)
+               ->update(['powerAmount' => $value]);
+     }
+
      public function logPayment($id, $type, $amount)
      {
           DB::table('payments')->insert([
@@ -82,5 +89,10 @@ class DBService
      public function resetPayments()
      {
        DB::table('payments')->truncate();
+     }
+
+     public function getUserCount()
+     {
+          return DB::table('users')->count();
      }
 }
